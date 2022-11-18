@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Sigma.Task.BL\Sigma.Task.BL.csproj" />
   </ItemGroup>
 
 </Project>
