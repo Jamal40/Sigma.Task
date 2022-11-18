@@ -49,6 +49,63 @@ public class CandidatesControllerTests
             error => error.MemberNames.Contains("Email"));
     }
 
+
+    [Fact]
+    public void CandidateWriteDTO_Email_Required()
+    {
+        //Arange
+        var validCandidate = GenerateValidCandidateDTO();
+        var invalidCandidate = validCandidate with { Email = "" };
+
+        //Act
+
+        //Assert
+        Assert.Contains(ValidateModel(invalidCandidate),
+            error => error.MemberNames.Contains("Email"));
+    }
+    
+    [Fact]
+    public void CandidateWriteDTO_FirstName_Required()
+    {
+        //Arange
+        var validCandidate = GenerateValidCandidateDTO();
+        var invalidCandidate = validCandidate with { FirstName = "" };
+
+        //Act
+
+        //Assert
+        Assert.Contains(ValidateModel(invalidCandidate),
+            error => error.MemberNames.Contains("FirstName"));
+    }
+    
+    [Fact]
+    public void CandidateWriteDTO_LastName_Required()
+    {
+        //Arange
+        var validCandidate = GenerateValidCandidateDTO();
+        var invalidCandidate = validCandidate with { LastName = "" };
+
+        //Act
+
+        //Assert
+        Assert.Contains(ValidateModel(invalidCandidate),
+            error => error.MemberNames.Contains("LastName"));
+    }
+    
+    [Fact]
+    public void CandidateWriteDTO_Comment_Required()
+    {
+        //Arange
+        var validCandidate = GenerateValidCandidateDTO();
+        var invalidCandidate = validCandidate with { Comment = "" };
+
+        //Act
+
+        //Assert
+        Assert.Contains(ValidateModel(invalidCandidate),
+            error => error.MemberNames.Contains("Comment"));
+    }
+
     #region Helpers
 
     private static CandidateWriteDTO GenerateValidCandidateDTO()
