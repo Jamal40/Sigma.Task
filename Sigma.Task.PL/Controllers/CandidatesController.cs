@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Sigma.Task.BL;
+using Sigma.Task.BL.CandidatesManager;
 using Sigma.Task.DAL;
+using Sigma.Task.DTOs;
 
 namespace Sigma.Task.PL.Controllers;
 
@@ -7,17 +10,21 @@ namespace Sigma.Task.PL.Controllers;
 [ApiController]
 public class CandidatesController : ControllerBase
 {
-	private readonly ICandidateRepository _candidateRepository;
+    private readonly ICandidatesManager _candidatesManager;
 
-	public CandidatesController(ICandidateRepository candidateRepository)
-	{
-		_candidateRepository = candidateRepository;
-	}
+    public CandidatesController(ICandidatesManager candidatesManager)
+    {
+        _candidatesManager = candidatesManager;
+    }
 
-	[HttpPost]
-	public ActionResult AddOrUpdate(Candidate candidate)
-	{
-		_candidateRepository.AddOrUpdate(candidate);
-		return NoContent();
-	}
+    [HttpPost]
+    public ActionResult AddOrUpdate(CandidateWriteDTO input)
+    {
+        var isSuccess = _candidatesManager.AddOrUpdate(input);
+        if (!isSuccess)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+        return NoContent();
+    }
 }

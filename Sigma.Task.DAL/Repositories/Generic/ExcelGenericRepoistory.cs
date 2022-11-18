@@ -7,8 +7,13 @@ public record KeyInfo(string KeyName, string KeyValue);
 
 public class ExcelGenericRepoistory<T> : IGenericRepository<T> where T : class
 {
-    private readonly string filePath = "C:\\Users\\Jamal\\Downloads\\SigmaTask.csv";
+    private readonly string filePath;
     private IEnumerable<string> savedRecords = new string[0];
+
+    public ExcelGenericRepoistory()
+    {
+        filePath = Directory.GetCurrentDirectory() + @"ExcelData/SigmaTask.csv";
+    }
 
     public void AddOrUpdate(T entity)
     {

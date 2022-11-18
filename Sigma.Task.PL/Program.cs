@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<ICandidateRepository, ExcelCandidateRepository>();
+builder.Services.AddScoped<ICandidateRepository, ExcelCandidatesRepository>();
 
 var app = builder.Build();
 
