@@ -7,7 +7,8 @@ public record KeyInfo(string KeyName, string KeyValue);
 
 public class ExcelGenericRepoistory<T> : IGenericRepository<T> where T : class
 {
-    private readonly string filePath = "";
+    private readonly string filePath = "C:\\Users\\Jamal\\Downloads\\SigmaTask.csv";
+    private IEnumerable<string> savedRecords = new string[0];
 
     public void AddOrUpdate(T entity)
     {
@@ -21,44 +22,16 @@ public class ExcelGenericRepoistory<T> : IGenericRepository<T> where T : class
         {
             var newRecords = records.ToList();
             newRecords.Add(newRecord);
-            File.WriteAllLines(filePath, newRecords);
+            savedRecords = newRecords;
             return;
         }
         records[existingEntityIndex] = newRecord;
-        File.WriteAllLines(filePath, records);
+        savedRecords = records;
     }
 
-    public void Update(T entity)
+    public void SaveChanges()
     {
-        string[] records = File.ReadAllLines(filePath);
-        Dictionary<string, int> columnsIndices = GetColumnsIndices(records);
-        KeyInfo keyInfo = GetKeyproperty(entity);
-        int entityIndex = GetIndexOfElementWithKey(records, columnsIndices, keyInfo);
-
-        if (entityIndex != -1)
-        {
-            throw new Exception("Trying to add duplicate key");
-        }
-
-        string newRecord = GenerateEntityRecord(entity, records);
-        records[entityIndex] = newRecord;
-
-        File.WriteAllLines(filePath, records);
-    }
-
-    public void Delete(T key)
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<T> GetAll()
-    {
-        throw new NotImplementedException();
-    }
-
-    public T? GetByKey(T key)
-    {
-        throw new NotImplementedException();
+        File.WriteAllLines(filePath, savedRecords);
     }
 
     #region Helpers
@@ -90,8 +63,8 @@ public class ExcelGenericRepoistory<T> : IGenericRepository<T> where T : class
     private static int GetIndexOfElementWithKey(string[] records, Dictionary<string, int> columnsIndices, KeyInfo keyInfo)
     {
         return records
-            .Where(r => r.Split(',')[columnsIndices[keyInfo.KeyName]] == keyInfo.KeyValue)
             .Select((value, index) => new { value, index })
+            .Where(r => r.value.Split(',')[columnsIndices[keyInfo.KeyName]] == keyInfo.KeyValue)
             .FirstOrDefault()?.index ?? -1;
     }
 
