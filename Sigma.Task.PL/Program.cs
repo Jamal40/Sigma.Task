@@ -13,6 +13,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ICandidatesRepository, ExcelCandidatesRepository>();
 builder.Services.AddScoped<ICandidatesManager, CandidatesManager>();
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
 var app = builder.Build();
 

@@ -21,6 +21,7 @@ public class CandidatesManager : ICandidatesManager
         {
             var model = _mapper.Map<Candidate>(candidateDTO);
             _candidateRepository.AddOrUpdate(model);
+            _candidateRepository.SaveChanges();
             return true;
         }
         catch

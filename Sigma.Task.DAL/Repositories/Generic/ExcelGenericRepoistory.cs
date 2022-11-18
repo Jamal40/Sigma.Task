@@ -12,7 +12,7 @@ public class ExcelGenericRepoistory<T> : IGenericRepository<T> where T : class
 
     public ExcelGenericRepoistory()
     {
-        filePath = Directory.GetCurrentDirectory() + @"ExcelData/SigmaTask.csv";
+        filePath = Directory.GetCurrentDirectory() + @"/ExcelData/SigmaTask.csv";
     }
 
     public void AddOrUpdate(T entity)
