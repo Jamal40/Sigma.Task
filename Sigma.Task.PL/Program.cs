@@ -1,3 +1,5 @@
+using Sigma.Task.BL;
+using Sigma.Task.BL.CandidatesManager;
 using Sigma.Task.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<ICandidateRepository, ExcelCandidatesRepository>();
+builder.Services.AddScoped<ICandidatesRepository, ExcelCandidatesRepository>();
+builder.Services.AddScoped<ICandidatesManager, CandidatesManager>();
 
 var app = builder.Build();
 

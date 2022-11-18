@@ -1,5 +1,5 @@
 ﻿namespace Sigma.Task.DAL;
 
-public class ExcelCandidatesRepository : ExcelGenericRepoistory<Candidate>, ICandidateRepository
+public class ExcelCandidatesRepository : ExcelGenericRepoistory<Candidate>, ICandidatesRepository
 {
 }

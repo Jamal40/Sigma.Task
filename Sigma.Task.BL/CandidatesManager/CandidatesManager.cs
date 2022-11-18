@@ -6,10 +6,10 @@ namespace Sigma.Task.BL.CandidatesManager;
 
 public class CandidatesManager : ICandidatesManager
 {
-    private readonly ICandidateRepository _candidateRepository;
+    private readonly ICandidatesRepository _candidateRepository;
     private readonly IMapper _mapper;
 
-    public CandidatesManager(ICandidateRepository candidateRepository, IMapper mapper)
+    public CandidatesManager(ICandidatesRepository candidateRepository, IMapper mapper)
     {
         _candidateRepository = candidateRepository;
         _mapper = mapper;
