@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<ICandidatesRepository, ExcelCandidatesRepository>();
+builder.Services.AddScoped<ICandidatesRepository, CSVCandidatesRepository>();
 builder.Services.AddScoped<ICandidatesManager, CandidatesManager>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 

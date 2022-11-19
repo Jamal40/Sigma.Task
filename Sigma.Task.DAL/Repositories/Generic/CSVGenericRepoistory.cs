@@ -1,16 +1,14 @@
-﻿using System.Reflection;
-using System.Text;
+﻿namespace Sigma.Task.DAL;
 
-namespace Sigma.Task.DAL;
 
-public record KeyInfo(string KeyName, string KeyValue);
-
-public class ExcelGenericRepoistory<T> : IGenericRepository<T> where T : class
+public class CSVGenericRepoistory<T> : IGenericRepository<T> where T : class
 {
+    record KeyInfo(string KeyName, string KeyValue);
+
     private readonly string filePath;
     private IEnumerable<string> savedRecords = new string[0];
 
-    public ExcelGenericRepoistory()
+    public CSVGenericRepoistory()
     {
         filePath = Directory.GetCurrentDirectory() + @"/ExcelData/SigmaTask.csv";
     }
