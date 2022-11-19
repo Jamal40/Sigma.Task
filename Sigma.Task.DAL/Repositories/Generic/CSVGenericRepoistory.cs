@@ -6,11 +6,21 @@ public class CSVGenericRepoistory<T> : IGenericRepository<T> where T : class
     record KeyInfo(string KeyName, string KeyValue);
 
     private readonly string filePath;
-    private IEnumerable<string> savedRecords = new string[0];
+    private IEnumerable<string> recordsToApply = new string[0];
 
     public CSVGenericRepoistory()
     {
         filePath = Directory.GetCurrentDirectory() + @"/ExcelData/SigmaTask.csv";
+    }
+
+    public List<T> GetAll()
+    {
+        string[] records = File.ReadAllLines(filePath);
+        Dictionary<string, int> columnsIndices = GetColumnsIndices(records);
+        return records
+            .Skip(1)
+            .Select(record => record.Split(','))
+            .Select(recordValues => CreateObject(recordValues, columnsIndices)).ToList();
     }
 
     public void AddOrUpdate(T entity)
@@ -25,16 +35,16 @@ public class CSVGenericRepoistory<T> : IGenericRepository<T> where T : class
         {
             var newRecords = records.ToList();
             newRecords.Add(newRecord);
-            savedRecords = newRecords;
+            recordsToApply = newRecords;
             return;
         }
         records[existingEntityIndex] = newRecord;
-        savedRecords = records;
+        recordsToApply = records;
     }
 
     public void SaveChanges()
     {
-        File.WriteAllLines(filePath, savedRecords);
+        File.WriteAllLines(filePath, recordsToApply);
     }
 
     #region Helpers
@@ -44,6 +54,17 @@ public class CSVGenericRepoistory<T> : IGenericRepository<T> where T : class
         return records[0].Split(',')
             .Select((column, index) => (column, index))
             .ToDictionary(item => item.column, item => item.index);
+    }
+
+    private T CreateObject(string[] recordValues, Dictionary<string, int> columnsIndices)
+    {
+        T mappedRecord = (T)Activator.CreateInstance(typeof(T))!;
+        foreach (var property in typeof(T).GetProperties())
+        {
+            int indexOfProperty = columnsIndices[property.Name];
+            property.SetValue(mappedRecord, recordValues[indexOfProperty]);
+        }
+        return mappedRecord;
     }
 
     private static KeyInfo GetKeyproperty(T entity)
