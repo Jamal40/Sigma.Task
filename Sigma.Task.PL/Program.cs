@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Sigma.Task.BL;
 using Sigma.Task.BL.CandidatesManager;
 using Sigma.Task.DAL;
@@ -11,7 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<ICandidatesRepository, CSVCandidatesRepository>();
+var connectionString = builder.Configuration.GetConnectionString("CandidatesDb");
+builder.Services.AddDbContext<CandidatesContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddScoped<ICandidatesRepository, EFCandidatesRepository>();
 builder.Services.AddScoped<ICandidatesManager, CandidatesManager>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
