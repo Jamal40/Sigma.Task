@@ -1,6 +1,7 @@
 using Sigma.Task.BL;
 using Sigma.Task.BL.CandidatesManager;
 using Sigma.Task.DAL;
+using Sigma.Task.PL.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICandidatesRepository, CSVCandidatesRepository>();
 builder.Services.AddScoped<ICandidatesManager, CandidatesManager>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
+
+builder.Services.AddMemoryCache();
+//builder.Services.AddSingleton<CachingFilterResourceAttribute>();
 
 var app = builder.Build();
 

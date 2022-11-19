@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Caching.Memory;
+using Sigma.Task.BL.Utilities;
 using Sigma.Task.DAL;
 using Sigma.Task.DTOs;
 
@@ -8,18 +10,23 @@ public class CandidatesManager : ICandidatesManager
 {
     private readonly ICandidatesRepository _candidateRepository;
     private readonly IMapper _mapper;
+    private readonly IMemoryCache _memoryCache;
 
-    public CandidatesManager(ICandidatesRepository candidateRepository, IMapper mapper)
+    public CandidatesManager(ICandidatesRepository candidateRepository, IMapper mapper, IMemoryCache memoryCache)
     {
         _candidateRepository = candidateRepository;
         _mapper = mapper;
+        _memoryCache = memoryCache;
     }
 
     public List<CandidateReadDTO>? GetAll()
     {
         try
         {
-            return _mapper.Map<List<CandidateReadDTO>>(_candidateRepository.GetAll());
+            Console.WriteLine("Method Executed");
+            var result = _mapper.Map<List<CandidateReadDTO>>(_candidateRepository.GetAll());
+            _memoryCache.Set(CachingKeys.Candidates, result, TimeSpan.FromMinutes(20));
+            return result;
         }
         catch
         {

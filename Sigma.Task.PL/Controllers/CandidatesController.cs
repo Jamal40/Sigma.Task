@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sigma.Task.BL;
 using Sigma.Task.BL.CandidatesManager;
+using Sigma.Task.BL.Utilities;
 using Sigma.Task.DAL;
 using Sigma.Task.DTOs;
+using Sigma.Task.PL.Filters;
 
 namespace Sigma.Task.PL.Controllers;
 
@@ -18,6 +20,7 @@ public class CandidatesController : ControllerBase
     }
 
     [HttpGet]
+    [TypeFilter(typeof(CachingFilterResourceAttribute), Arguments = new[] { CachingKeys.Candidates })]
     public ActionResult<List<CandidateReadDTO>> GetAll()
     {
         var result = _candidatesManager.GetAll();
