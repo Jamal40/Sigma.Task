@@ -29,3 +29,6 @@ It has Web APIs to achieve the business through Managers.
 - Cache the list returned from the store, if the list isn't frequently updated.
 - Caching should be handled in the Resource Filter stage (After Authorization and before Model Binding).
 - Using Real Database instead of csv like (MongoDb Or Sql Server etc.
+
+## Duration 
+4-6 hours.
