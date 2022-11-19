@@ -28,7 +28,7 @@ It has Web APIs to achieve the business through Managers.
 - Adding other endpoints to retriev Data from our Store. Applied in branch (Features/AddingGetAllEndpoint)
 - Cache the list returned from the store, if the list isn't frequently updated. Applied in branch (Features/AddingGetAllEndpoint)
 - Caching should be handled in the Resource Filter stage (After Authorization and before Model Binding). Applied in branch (Features/AddingGetAllEndpoint)
-- Using Real Database instead of csv like (MongoDb Or Sql Server etc.
+- Using Real Database instead of csv like (MongoDb Or Sql Server etc. Applied in branch (Features/SwitchingToSqlServer).
 
 ## Duration 
 4-6 hours.
