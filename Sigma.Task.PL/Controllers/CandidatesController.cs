@@ -17,6 +17,17 @@ public class CandidatesController : ControllerBase
         _candidatesManager = candidatesManager;
     }
 
+    [HttpGet]
+    public ActionResult<List<CandidateReadDTO>> GetAll()
+    {
+        var result = _candidatesManager.GetAll();
+        if (result is null)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+        return result;
+    }
+
     [HttpPost]
     public ActionResult AddOrUpdate(CandidateWriteDTO input)
     {

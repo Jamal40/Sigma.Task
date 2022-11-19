@@ -15,6 +15,18 @@ public class CandidatesManager : ICandidatesManager
         _mapper = mapper;
     }
 
+    public List<CandidateReadDTO>? GetAll()
+    {
+        try
+        {
+            return _mapper.Map<List<CandidateReadDTO>>(_candidateRepository.GetAll());
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
     public bool AddOrUpdate(CandidateWriteDTO candidateDTO)
     {
         try

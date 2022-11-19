@@ -8,6 +8,7 @@ public class AutoMapperProfile : Profile
 {
 	public AutoMapperProfile()
 	{
+		CreateMap<Candidate, CandidateReadDTO>();
 		CreateMap<CandidateWriteDTO, Candidate>();
 	}
 }
